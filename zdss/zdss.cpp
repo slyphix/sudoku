@@ -6,7 +6,6 @@
 #include <intrin.h>
 #pragma intrinsic(_BitScanForward)
 #define MSVC
-
 #ifdef _DEBUG
 #define DEBUG
 #endif
@@ -14,6 +13,10 @@
 
 #ifdef DEBUG
 #include <bitset>
+#endif
+
+#ifdef TIMED
+#include <chrono>
 #endif
 
 /**
@@ -30,6 +33,8 @@
 // COMPILATION OPTIONS
 // NOVALIDATE   to suppress input validation
 // NOREPRINT    to suppress reprinting the input
+// TIMED        to enable timer
+
 
 using Sudoku = std::array<int, 81>;
 using SudokuData = std::array<int, 81>;
@@ -204,6 +209,10 @@ bool solve(Sudoku &sudoku, SudokuData &data) {
 
 int main() {
 
+#ifdef TIMED
+    std::chrono::time_point<std::chrono::system_clock> start = std::chrono::system_clock::now();
+#endif
+
     std::array<char, 82> line;
     while (true) {
 
@@ -274,6 +283,12 @@ int main() {
             std::cout << "No solution found.\n";
         }
     }
+
+#ifdef TIMED
+    std::chrono::time_point<std::chrono::system_clock> end = std::chrono::system_clock::now();
+    std::chrono::duration<double> delta = end - start;
+    std::cerr << "Required " << delta.count() << " seconds." << std::endl;
+#endif
 
     return 0;
 }
