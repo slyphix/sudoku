@@ -63,7 +63,7 @@ int main(int argc, char** argv) {
     }
 
     while (std::getline(std::cin, line)) {
-        if (line.length() < 81) {
+        if (line.length() != 81) {
             if (line.length())
                 skips++;
             continue;
@@ -73,6 +73,6 @@ int main(int argc, char** argv) {
         std::cout << std::endl;
     }
     if (skips) {
-        std::cerr << "Skipped " << skips << " non-empty lines containing less than 81 characters." << std::endl;
+        std::cerr << "Skipped " << skips << " non-empty lines not containing exactly 81 characters." << std::endl;
     }
 }

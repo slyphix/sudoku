@@ -101,16 +101,15 @@ bool singles(Sudoku &sudoku, SudokuData &data) {
 // find candidates that occur exactly once in a block ("hidden singles")
 // <0, 1, 0> / <0> corresponds to top row
 // <0, 9, 0> / <0, 9> corresponds to leftmost column
-// <0, 1, 9> corresponds to upper left square
-template <int start, int inc = 1, int stride = 0>
+// <0, 1, 6> corresponds to upper left square
+template <int start, int inc = 1, int skip = 0>
 bool hsinglesblock(Sudoku &sudoku, SudokuData &data) {
 
     int onceormore = 0, twiceormore = 0;
-    int offset = start;
+    int index = start;
 
     // unroll this please
-    for (int i = 0; i < 3; ++i, offset += stride) {
-        int index = offset;
+    for (int i = 0; i < 3; ++i, index += skip) {
         for (int j = 0; j < 3; ++j, index += inc) {
             int candidates = data[index];
             twiceormore |= onceormore & candidates;
@@ -127,9 +126,8 @@ bool hsinglesblock(Sudoku &sudoku, SudokuData &data) {
         << " in block (" << start << "," << inc << "," << skip << ")" << std::endl;
 #endif
 
-    offset = start;
-    for (int i = 0; i < 3; ++i, offset += stride) {
-        int index = offset;
+    index = start;
+    for (int i = 0; i < 3; ++i, index += skip) {
         for (int j = 0; j < 3; ++j, index += inc) {
             int intersect = data[index] & once;
             if (intersect) {
@@ -148,7 +146,7 @@ template <int N = 0>
 bool hsingles(Sudoku &sudoku, SudokuData &data) {
     return hsinglesblock<N * 9>(sudoku, data) ||
            hsinglesblock<N, 9>(sudoku, data) ||
-           hsinglesblock<N / 3 * 27 + N % 3 * 3, 1, 9>(sudoku, data) ||
+           hsinglesblock<N / 3 * 27 + N % 3 * 3, 1, 6>(sudoku, data) ||
            hsingles<N + 1>(sudoku, data);
 }
 

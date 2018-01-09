@@ -28,15 +28,15 @@
 
 using Sudoku = std::array<int, 81>;
 
-template <int start, int inc = 1, int stride = 0>
+template <int start, int inc = 1, int skip = 0>
 bool validate_block(Sudoku &sudoku) {
 
     int once = 0;
     int twice = 0;
-    int offset = start;
+    int index = start;
 
-    for (int i = 0; i < 3; ++i, offset += stride) {
-        for (int j = 0, index = offset; j < 3; ++j, index += inc) {
+    for (int i = 0; i < 3; ++i, index += skip) {
+        for (int j = 0; j < 3; ++j, index += inc) {
             twice |= once & sudoku[index];
             once |= sudoku[index];
         }
@@ -52,7 +52,7 @@ template <int N = 0>
 bool validate(Sudoku &sudoku) {
     return validate_block<N * 9>(sudoku) &&
            validate_block<N, 9>(sudoku) &&
-           validate_block<N / 3 * 27 + N % 3 * 3, 1, 9>(sudoku) &&
+           validate_block<N / 3 * 27 + N % 3 * 3, 1, 6>(sudoku) &&
            validate<N + 1>(sudoku);
 }
 
