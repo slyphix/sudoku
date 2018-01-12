@@ -1,24 +1,30 @@
 
-command = g++ -std=c++14 -O3 -march=native -funroll-loops
-dir = .
+cc = g++ -std=c++14 -O3 -march=native -funroll-loops
+mkdir = mkdir -p
+rm = rm -f
+build_dir = build
 
-basic : zdss spp zdsv
+all : zdss helpers
+opt : override zdss_flags += -DNOREPRINT -DNOVALIDATE
+opt : zdss
+helpers : zdsv spp
 
-zdss :
-	$(command) $(zdss_opts) -o $(dir)/zdss zdss/zdss.cpp
+zdss : directory
+	$(cc) $(zdss_flags) -o $(build_dir)/zdss zdss/zdss.cpp
 
-zdssoptimized :
-	$(command) -DNOREPRINT -DNOVALIDATE -o $(dir)/zdss zdss/zdss.cpp
+zdsv : directory
+	$(cc) $(zdsv_flags) -o $(build_dir)/zdsv zdsv/zdsv.cpp
 
-spp :
-	$(command) -o $(dir)/spp spp/spp.cpp
+spp : directory
+	$(cc) -o $(build_dir)/spp spp/spp.cpp
 
-zdsv :
-	$(command) -o $(dir)/zdsv zdsv/zdsv.cpp
+formatverifier : directory
+	$(cc) -DALLOWEMPTY -DALLOWMULT -o $(build_dir)/zdsfv zdsv/zdsv.cpp
 
-formatcheck :
-	$(command) -DALLOWEMPTY -DALLOWMULT -o $(dir)/zdsfv zdsv/zdsv.cpp
 
-.PHONY : clean
+.PHONY : directory clean
+directory :
+	$(mkdir) $(build_dir)
+
 clean :
-	rm -f $(dir)/zdss $(dir)/spp $(dir)/zdsv $(dir)/zdsfv
+	$(rm) $(build_dir)/zdss $(build_dir)/spp $(build_dir)/zdsv $(build_dir)/zdsfv

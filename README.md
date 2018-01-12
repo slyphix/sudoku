@@ -8,4 +8,3 @@ This repository contains
 Pending changes:
 - further optimize solver
 - implement generator
-- supply better makefile
