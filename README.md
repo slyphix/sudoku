@@ -1,4 +1,4 @@
-## [WIP] Sudoku Suite
+## Sudoku Solver Suite
 
 This repository contains
 - a sudoku solver
