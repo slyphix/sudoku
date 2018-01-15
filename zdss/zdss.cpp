@@ -151,7 +151,7 @@ bool hsingles(Sudoku &sudoku, SudokuData &data) {
 }
 
 template <>
-bool hsingles<9>(Sudoku &sudoku, SudokuData &data) { return false; }
+bool hsingles<9>(Sudoku &, SudokuData &) { return false; }
 
 bool solve(Sudoku &sudoku, SudokuData &data) {
 

@@ -57,11 +57,13 @@ bool validate(Sudoku &sudoku) {
 }
 
 template <>
-bool validate<9>(Sudoku &sudoku) { return true; }
+bool validate<9>(Sudoku &) { return true; }
 
-int main(int argc, char** argv) {
+int main() {
 
+#ifdef FINDALL
     bool ok = true;
+#endif
     std::string line;
 
     while (std::getline(std::cin, line)) {
@@ -90,8 +92,9 @@ int main(int argc, char** argv) {
 #ifndef ALLOWEMPTY
             if (!digit) {
                 std::cerr << "Empty field detected. Offending line:\n" << line << std::endl;
+#ifdef FINDALL
                 ok = false;
-#ifndef FINDALL
+#else
                 return 2;
 #endif
             }
@@ -104,8 +107,9 @@ int main(int argc, char** argv) {
 #ifndef ALLOWMULT
         if (!validate<>(sudoku)) {
             std::cerr << "Contradiction detected. Offending line:\n" << line << std::endl;
+#ifdef FINDALL
             ok = false;
-#ifndef FINDALL
+#else
             return 2;
 #endif
         }
