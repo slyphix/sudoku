@@ -1,25 +1,29 @@
 
-cc = g++ -std=c++14 -O3 -march=native -funroll-loops
+cc = g++
+cc_flags = -std=c++14 -O3 -march=native -funroll-loops
+cc_call = $(cc) $(cc_flags)
 mkdir = mkdir -p
 rm = rm -f
 build_dir = build
 
+ifdef opt
+zdss_flags += -DNOREPRINT -DNOVALIDATE
+endif
+
 all : zdss helpers
-opt : override zdss_flags += -DNOREPRINT -DNOVALIDATE
-opt : zdss
 helpers : zdsv spp
 
 zdss : directory
-	$(cc) $(zdss_flags) -o $(build_dir)/zdss zdss/zdss.cpp
+	$(cc_call) $(zdss_flags) -o $(build_dir)/zdss zdss/zdss.cpp
 
 zdsv : directory
-	$(cc) $(zdsv_flags) -o $(build_dir)/zdsv zdsv/zdsv.cpp
+	$(cc_call) $(zdsv_flags) -o $(build_dir)/zdsv zdsv/zdsv.cpp
 
 spp : directory
-	$(cc) -o $(build_dir)/spp spp/spp.cpp
+	$(cc_call) -o $(build_dir)/spp spp/spp.cpp
 
 formatverifier : directory
-	$(cc) -DALLOWEMPTY -DALLOWMULT -o $(build_dir)/zdsfv zdsv/zdsv.cpp
+	$(cc_call) -DALLOWEMPTY -DALLOWMULT -o $(build_dir)/zdsfv zdsv/zdsv.cpp
 
 
 .PHONY : directory clean
