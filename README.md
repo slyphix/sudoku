@@ -1,7 +1,7 @@
 # Sudoku Suite
 
 I actually intended to implement a Sudoku generator, but it kind of
-escalated into an attempt to produce a very fast Sudoku solver instead.
+escalated into an attempt to produce a fast Sudoku solver instead.
 
 All utilities are designed to use standard streams (`stdin`, `stdout`, `stderr`)
 to allow input/output redirection. Data can be piped from one utility
