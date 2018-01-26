@@ -185,7 +185,7 @@ bool solve(Sudoku &sudoku, SudokuData &data) {
         put(sudoku, data, mindex, c);
 
 #ifdef DEBUG
-        std::cout << "[-] " << mindex << ": Testing " << firstSetIndex(c) << ". Candidate set is "
+        std::cout << "[+] " << mindex << ": Testing " << firstSetIndex(c) << ". Candidate set is "
             << std::bitset<9>(*(unsigned int *)&candidates) << "." << std::endl;
 #endif
 
