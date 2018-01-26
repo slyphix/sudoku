@@ -59,7 +59,8 @@ which suppresses input validation. You can change this behavior by running
 to clear the optimization flags. You can set additional compilation flags
 for the solver by setting the `zdss_flags` variable. The solver also contains
 a timer utility which outputs to `stderr`. The timer can be enabled by
-defining the `TIMED` macro. You can do so from `make` by executing
+defining the `TIMED` macro. It is possible do so without editing the
+source code by executing
 
     make zdss_flags=-DTIMED
 
@@ -144,4 +145,4 @@ without checking for correctness. Use the predefined rule
 
     make formatverifier
 
-to summon `zdsfv`, the Zero-delay Sudoku Format Verifier.
+to summon `zdsfv`, the _Zero-delay Sudoku Format Verifier_.
