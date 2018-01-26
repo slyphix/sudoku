@@ -3,22 +3,22 @@
 I actually intended to implement a Sudoku generator, but it kind of
 escalated into an attempt to produce a very fast Sudoku solver instead.
 
-All utilities are intended to use standard streams (`stdin`, `stdout`, `stderr`)
+All utilities are designed to use standard streams (`stdin`, `stdout`, `stderr`)
 to allow input/output redirection. Data can be piped from one utility
-to another, so that solving a single Sudoku is as easy as
+to another so that solving a single Sudoku instance is as easy as
 
     echo 030000000000195000008000060800060000400800001000020000060000280000419005000000070|zdss|spp bordered
 
 The input is expected to consist of the digits 0-9, where 0 represents an empty
 field, in row-major order, for a total of 81 digits per line.
 Every line will be treated as a different puzzle instance, so you can pass
-as many instances as you wish. However, try to avoid blank lines. Example input:
+as many instances as you wish. Avoid blank lines however. Valid input example:
 
     030000000000195000008000060800060000400800001000020000060000280000419005000000070
 
 The included text file should contain plenty of example instances.
 
-#### Pending changes
+#### Pending changes:
 - further optimize solver
 - implement instance generator
 
@@ -35,13 +35,13 @@ target directory you can do so by running
 
     make build_dir=path/to/directory
 
-instead. If you receive errors about `mkdir` not being found by `make`,
+instead. If for some reason `mkdir` is not working properly,
 you can disable directory creation entirely by using
 
     make mkdir=#
 
 Note that you will have to create the target directory yourself in this case.
-You can also change the default compiler and compiler flags by setting the
+You can also change the default compiler and compilation flags by setting the
 `cc` and `cc_flags` variables. Use
 
     make clean
@@ -66,12 +66,14 @@ defining the `TIMED` macro. You can do so from `make` by executing
 
 ### Sudoku Pretty Printer (spp)
 
-The printing utility does not support any compilation options at this time
-but you can choose between 3 different printing styles:
+The printing utility does not support any compilation options at this time.
+However, you are able to choose between 3 different printing styles:
 
 #### Default style
 
-    echo 030000000000195000008000060800060000400800001000020000060000280000419005000000070| spp
+The default style explicitly presents lines and blocks without visual clutter.
+
+    echo 030000000000195000008000060800060000400800001000020000060000280000419005000000070|spp
 
 produces the following output:
 
@@ -89,7 +91,9 @@ produces the following output:
 
 #### Bordered style
 
-    echo 030000000000195000008000060800060000400800001000020000060000280000419005000000070| spp bordered
+This style is intended to improve readability for humans.
+
+    echo 030000000000195000008000060800060000400800001000020000060000280000419005000000070|spp bordered
 
 produces the following output:
 
@@ -109,7 +113,10 @@ produces the following output:
 
 #### Minimal style
 
-    echo 030000000000195000008000060800060000400800001000020000060000280000419005000000070| spp minimal
+This can be potentially useful if you wish to to convert to a different
+representation, e.g. if an external program requires the rows to be separated.
+
+    echo 030000000000195000008000060800060000400800001000020000060000280000419005000000070|spp minimal
 
 produces the following output:
 
@@ -122,9 +129,6 @@ produces the following output:
     0 6 0 0 0 0 2 8 0
     0 0 0 4 1 9 0 0 5
     0 0 0 0 0 0 0 7 0
-
-This can be potentially useful if you wish to to convert to a different
-representation, e.g. if an external program requires the rows to be separated.
 
 
 ### Zero-delay Sudoku Verifier (zdsv)
