@@ -23,7 +23,7 @@ The included text file should contain plenty of example instances.
 - implement instance generator
 
 
-## Installation instructions
+## Installation Instructions
 
 To build the solver, a simple
 
