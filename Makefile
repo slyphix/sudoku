@@ -2,19 +2,18 @@
 cc = g++
 cc_flags = -std=c++14 -O3 -march=native -funroll-loops
 cc_call = $(cc) $(cc_flags)
+
 mkdir = mkdir -p
 rm = rm -f
 build_dir = build
 
-ifdef opt
-zdss_flags += -DNOREPRINT -DNOVALIDATE
-endif
+zdss_opt = -DNOREPRINT -DNOVALIDATE
 
-all : zdss helpers
-helpers : zdsv spp
+all : zdss utils
+utils : zdsv spp
 
 zdss : directory
-	$(cc_call) $(zdss_flags) -o $(build_dir)/zdss zdss/zdss.cpp
+	$(cc_call) $(zdss_flags) $(zdss_opt) -o $(build_dir)/zdss zdss/zdss.cpp
 
 zdsv : directory
 	$(cc_call) $(zdsv_flags) -o $(build_dir)/zdsv zdsv/zdsv.cpp
