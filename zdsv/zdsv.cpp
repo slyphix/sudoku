@@ -17,14 +17,15 @@
  */
 
 // COMPILATION OPTIONS
-// NOVALIDATE    to suppress input validation
+// NOVALIDATE    to suppress input format validation
+// ALLOWBLANK    to allow blank lines
 // ALLOWEMPTY    to allow empty fields
 // ALLOWMULT     to allow field values to appear multiple times inside a block
 // FINDALL       to prevent the program from terminating after discovering the first contradiction
 // REPRINT       to enable reprinting the input and suppress affirmation of correct input
 
-// REPRINT + FINDALL          can be used to filter any invalid sudoku instances.
-// ALLOWEMPTY + ALLOWDOUBLE   can also be used to only check if the input format is valid.
+// REPRINT + FINDALL          can be used to eliminate all invalid sudoku instances.
+// ALLOWEMPTY + ALLOWDOUBLE   can be used to only check if the input format is valid.
 
 using Sudoku = std::array<int, 81>;
 
@@ -68,8 +69,10 @@ int main() {
 
     while (std::getline(std::cin, line)) {
 
+#ifdef ALLOWBLANK
         if (line.empty())
             continue;
+#endif
 
 #ifndef NOVALIDATE
         if (line.length() != 81) {
