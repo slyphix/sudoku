@@ -90,7 +90,7 @@ bool singles(Sudoku &sudoku, SudokuData &data) {
             int c = candidates;
             put(sudoku, data, i, c);
 #ifdef DEBUG
-            std::cout << "[s] " << i << ": Found " << firstSetIndex(c) << "." << std::endl;
+            std::cout << "[s] " << i << ": Found " << first_set_index(c) << "." << std::endl;
 #endif
             found = true;
         }
@@ -133,7 +133,7 @@ bool hsinglesblock(Sudoku &sudoku, SudokuData &data) {
             if (intersect) {
                 put(sudoku, data, index, intersect);
 #ifdef DEBUG
-                std::cout << "[h] " << index << ": Found " << firstSetIndex(intersect) << "." << std::endl;
+                std::cout << "[h] " << index << ": Found " << first_set_index(intersect) << "." << std::endl;
 #endif
             }
         }
@@ -185,7 +185,7 @@ bool solve(Sudoku &sudoku, SudokuData &data) {
         put(sudoku, data, mindex, c);
 
 #ifdef DEBUG
-        std::cout << "[+] " << mindex << ": Testing " << firstSetIndex(c) << ". Candidate set is "
+        std::cout << "[+] " << mindex << ": Testing " << first_set_index(c) << ". Candidate set is "
             << std::bitset<9>(*(unsigned int *)&candidates) << "." << std::endl;
 #endif
 
@@ -195,7 +195,7 @@ bool solve(Sudoku &sudoku, SudokuData &data) {
         data = dcopy;
         sudoku = scopy;
 #ifdef DEBUG
-        std::cout << "[-] " << mindex << ": Revoking " << firstSetIndex(c) << "." << std::endl;
+        std::cout << "[-] " << mindex << ": Revoking " << first_set_index(c) << "." << std::endl;
 #endif
         candidates &= ~c;
     }
